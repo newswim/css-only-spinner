@@ -2,17 +2,28 @@ import React from 'react'
 import styled from 'styled-components'
 
 const animationLength = '2.5s'
-const dotSize = 60
+const dotSize = 100
 const animationRadius = dotSize * 2
 const lightBlue = '#1050CB'
 const darkBlue = '#161C4F'
 
-const D = styled.div`
+interface DProps {
+  readonly seconds: number
+  readonly diameter: number
+  readonly colors: {
+    main: string
+    accent: string
+  }
+}
+
+const D = styled.div<DProps>`
+  ${(props: DProps) => ``}
   position: relative;
   display: flex;
   width: ${animationRadius}px;
   height: ${animationRadius}px;
-  border: 2px dotted #f004;
+  border: 1px dotted #f00;
+  border-radius: 50%;
 
   span {
     width: ${dotSize}px;
@@ -22,10 +33,9 @@ const D = styled.div`
   }
 
   .N {
+    z-index: 1;
     left: ${dotSize / 2}px;
     background: ${lightBlue};
-    z-index: 1;
-
     animation: animateN ${animationLength} ease infinite;
   }
 
@@ -48,10 +58,10 @@ const D = styled.div`
   }
 
   .E {
-    left: ${dotSize}px;
-    top: ${dotSize / 2}px;
-    background: ${darkBlue};
     z-index: 2;
+    top: ${dotSize / 2}px;
+    left: ${dotSize}px;
+    background: ${darkBlue};
     animation: animateE ${animationLength} ease infinite;
   }
 
@@ -74,10 +84,10 @@ const D = styled.div`
   }
 
   .S {
+    z-index: 3;
     top: ${dotSize}px;
     left: ${dotSize / 2}px;
     background: ${lightBlue};
-    z-index: 3;
     animation: animateS ${animationLength} ease infinite;
 
     &::after {
@@ -87,6 +97,7 @@ const D = styled.div`
       background: ${darkBlue};
       height: ${dotSize}px;
       width: ${dotSize}px;
+
       animation: animateClipPath ${animationLength} ease infinite;
     }
   }
@@ -122,14 +133,14 @@ const D = styled.div`
       transform: rotate(360deg) translateY(${dotSize}px);
     }
     100% {
-      transform: translate(${0}px);
+      transform: translate(0);
     }
   }
 
   .W {
+    z-index: 0;
     top: ${dotSize / 2}px;
     background: ${darkBlue};
-    z-index: 0;
     animation: animateW ${animationLength} ease infinite;
   }
 
@@ -152,7 +163,20 @@ const D = styled.div`
   }
 `
 
-export const ClipPath = () => (
+interface Props {
+  readonly seconds?: number
+  readonly diameter?: number
+  readonly colors: {
+    main?: string
+    accent?: string
+  }
+}
+
+export const ClipPath = ({
+  seconds = 2.5,
+  diameter = 30,
+  colors = { main: darkBlue, accent: lightBlue },
+}: Props) => (
   <D>
     <span className="N" />
     <span className="E" />

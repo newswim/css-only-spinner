@@ -3,12 +3,13 @@ import { render } from 'react-dom'
 import Translate from './Translate'
 import { ClipPath } from './ClipPath'
 import styled from 'styled-components'
+import './index.css'
 
 const Container = styled.div`
-  font-family: sans-serif;
-  text-align: center;
-  margin-left: 100px;
-  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 20px);
 `
 
 const App = () => (
